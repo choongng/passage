@@ -13,8 +13,9 @@
 
 @property (assign) IBOutlet NSWindow *window;
 @property (weak) IBOutlet QTMovieView *movieView;
-@property (weak) IBOutlet NSMenuItem *statusMenu;
+@property (weak) IBOutlet NSMenu *statusMenu;
 @property NSTimer *frameAdvanceTimer;
+@property NSStatusItem *statusItem;
 
 - (void)advanceFrame;
 - (IBAction)selectMovieFile:(id)sender;

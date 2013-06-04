@@ -53,7 +53,15 @@
                                      target:self
                                    selector:@selector(advanceFrame)
                                    userInfo:nil
-                                    repeats:YES];    
+                                    repeats:YES];
+    
+    //
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSImage *statusImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForImageResource:@"smiley"]];
+    self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
+    [self.statusItem setImage:statusImage];
+    [self.statusItem setMenu:self.statusMenu];
+    
 }
 
 - (void)hideDockIcon
@@ -70,6 +78,7 @@
 }
 
 - (IBAction)selectMovieFile:(id)sender {
+    NSLog(@"hi");
 }
 
 @end
