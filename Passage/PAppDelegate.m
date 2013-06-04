@@ -38,6 +38,7 @@
     self.window.canHide = NO;
     self.window.collectionBehavior = NSWindowCollectionBehaviorCanJoinAllSpaces;
     
+    
     // Load the movie
     NSRect frame = self.window.screen.frame;
     [self.window setFrame:frame display:YES];
@@ -84,11 +85,14 @@
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
     openPanel.delegate = self;
     [openPanel beginWithCompletionHandler:^(NSInteger result) {
-        NSLog(@"%@", openPanel.URL);
-        [self loadMovie:openPanel.URL];
+        if (openPanel.URL != nil) {
+            NSLog(@"%@", openPanel.URL);
+            [self loadMovie:openPanel.URL];
+        }
     }];
     [openPanel setLevel:kCGPopUpMenuWindowLevel];
     [openPanel makeKeyAndOrderFront:self];
+    [NSApp activateIgnoringOtherApps:YES];    
 }
 
 @end
