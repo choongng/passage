@@ -32,10 +32,11 @@
     // Hide dock icon
     [self hideDockIcon];
     
-    // Place movie window over desktop
+    // Place movie window over desktop, under icons, and in all spaces
     [self.window setLevel:kCGDesktopWindowLevel];
     [self.window setStyleMask:0];
     self.window.canHide = NO;
+    self.window.collectionBehavior = NSWindowCollectionBehaviorCanJoinAllSpaces;
     
     // Load the movie
     NSRect frame = self.window.screen.frame;
