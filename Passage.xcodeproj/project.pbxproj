@@ -17,6 +17,7 @@
 		013C947D175C694100522999 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013C945D175C694000522999 /* Cocoa.framework */; };
 		013C9485175C694100522999 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 013C9483175C694100522999 /* InfoPlist.strings */; };
 		013C9488175C694100522999 /* PassageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 013C9487175C694100522999 /* PassageTests.m */; };
+		01E489F2175D91EC0084216A /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E489F1175D91EC0084216A /* QTKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,8 @@
 		013C9484175C694100522999 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		013C9486175C694100522999 /* PassageTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PassageTests.h; sourceTree = "<group>"; };
 		013C9487175C694100522999 /* PassageTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PassageTests.m; sourceTree = "<group>"; };
+		01E489EF175D91E50084216A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		01E489F1175D91EC0084216A /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01E489F2175D91EC0084216A /* QTKit.framework in Frameworks */,
 				013C945E175C694000522999 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -96,6 +100,8 @@
 			children = (
 				013C945D175C694000522999 /* Cocoa.framework */,
 				013C947B175C694100522999 /* SenTestingKit.framework */,
+				01E489F1175D91EC0084216A /* QTKit.framework */,
+				01E489EF175D91E50084216A /* AVFoundation.framework */,
 				013C945F175C694000522999 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -453,6 +459,7 @@
 				013C948D175C694100522999 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		013C948E175C694100522999 /* Build configuration list for PBXNativeTarget "PassageTests" */ = {
 			isa = XCConfigurationList;
@@ -461,6 +468,7 @@
 				013C9490175C694100522999 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

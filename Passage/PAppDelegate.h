@@ -7,9 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <QTKit/QTKit.h>
 
 @interface PAppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
+@property (weak) IBOutlet QTMovieView *movieView;
+@property NSTimer *frameAdvanceTimer;
+
+- (void)advanceFrame;
 
 @end

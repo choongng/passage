@@ -10,9 +10,61 @@
 
 @implementation PAppDelegate
 
+- (QTTime)getCurrentPlaybackTime
+{
+    // Get progress through the day
+    NSDate *now = [NSDate date];
+    NSDateComponents *dateComponents = [[NSCalendar currentCalendar]
+                                        components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit)
+                                        fromDate:now];
+    NSDate *beginningOfDay = [[NSCalendar currentCalendar] dateFromComponents:dateComponents];
+    NSTimeInterval dayElapsedInterval = [now timeIntervalSinceDate:beginningOfDay];
+    float dayElapsed = dayElapsedInterval / (24 * 60 * 60);
+    
+    // Set progress through the movie
+    QTTime startTime = self.movieView.movie.duration;
+    startTime.timeValue = startTime.timeValue * dayElapsed;
+    return startTime;
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    // Insert code here to initialize your application
+    [self hideDockIcon];
+    
+    [self.window setLevel:kCGDesktopWindowLevel];
+    [self.window setStyleMask:0];
+    self.window.canHide = NO;
+    
+    NSRect frame = self.window.screen.frame;
+    [self.window setFrame:frame display:YES];
+    self.movieView.frame = frame;
+    self.movieView.movie = [QTMovie movieWithFile:@"/Users/choong/Desktop/24 hours in Tokyo on July, 24th 2010 - Japan time lapse.mp4"
+                                            error:NULL];
+    self.movieView.preservesAspectRatio = YES;
+    self.movieView.movie.muted = YES;
+
+    [self.movieView.movie setCurrentTime:[self getCurrentPlaybackTime]];
+    
+    self.frameAdvanceTimer = [NSTimer scheduledTimerWithTimeInterval:10
+                                     target:self
+                                   selector:@selector(advanceFrame)
+                                   userInfo:nil
+                                    repeats:YES];
+    
+    self.movieView.movie.delegate = self;
+}
+
+- (void)hideDockIcon
+{
+    ProcessSerialNumber psn = { 0, kCurrentProcess };
+    TransformProcessType(&psn, kProcessTransformToBackgroundApplication);
+}
+
+- (void)advanceFrame
+{
+    // The implementation inside QT seems to be efficient when seeking to the
+    // same frame repeatedly.
+    self.movieView.movie.currentTime = [self getCurrentPlaybackTime];
 }
 
 @end
