@@ -41,12 +41,6 @@
     NSRect frame = self.window.screen.frame;
     [self.window setFrame:frame display:YES];
     self.movieView.frame = frame;
-    self.movieView.movie = [QTMovie movieWithFile:@"/Users/choong/Desktop/24 hours in Tokyo on July, 24th 2010 - Japan time lapse.mp4"
-                                            error:NULL];
-    self.movieView.preservesAspectRatio = YES;
-    self.movieView.movie.muted = YES;
-
-    [self.movieView.movie setCurrentTime:[self getCurrentPlaybackTime]];
     
     // Schedule periodic callback so we can advance the movie
     self.frameAdvanceTimer = [NSTimer scheduledTimerWithTimeInterval:10
@@ -55,13 +49,21 @@
                                    userInfo:nil
                                     repeats:YES];
     
-    //
+    // Add status item
     NSBundle *bundle = [NSBundle mainBundle];
     NSImage *statusImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForImageResource:@"smiley"]];
     self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
-    [self.statusItem setImage:statusImage];
+    self.statusItem.image = statusImage;
+    self.statusItem.highlightMode = YES;
     [self.statusItem setMenu:self.statusMenu];
-    
+}
+
+- (void)loadMovie:(NSURL *)movieURL
+{
+    self.movieView.movie = [QTMovie movieWithURL:movieURL error:NULL];
+    self.movieView.preservesAspectRatio = YES;
+    self.movieView.movie.muted = YES;
+    [self.movieView.movie setCurrentTime:[self getCurrentPlaybackTime]];
 }
 
 - (void)hideDockIcon
@@ -78,7 +80,14 @@
 }
 
 - (IBAction)selectMovieFile:(id)sender {
-    NSLog(@"hi");
+    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+    openPanel.delegate = self;
+    [openPanel beginWithCompletionHandler:^(NSInteger result) {
+        NSLog(@"%@", openPanel.URL);
+        [self loadMovie:openPanel.URL];
+    }];
+    [openPanel setLevel:kCGPopUpMenuWindowLevel];
+    [openPanel makeKeyAndOrderFront:self];
 }
 
 @end

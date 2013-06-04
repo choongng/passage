@@ -213,7 +213,7 @@
 					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
-						<object class="QTMovieView" id="647588870">
+						<object class="QTMovieView" id="916811531">
 							<reference key="NSNextResponder" ref="439893737"/>
 							<int key="NSvFlags">256</int>
 							<set class="NSMutableSet" key="NSDragTypes">
@@ -225,6 +225,7 @@
 							<string key="NSFrameSize">{575, 399}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<object class="NSColor" key="kCoderFillColor">
 								<int key="NSColorSpace">3</int>
@@ -239,7 +240,7 @@
 					<string key="NSFrameSize">{575, 399}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
-					<reference key="NSNextKeyView" ref="647588870"/>
+					<reference key="NSNextKeyView" ref="916811531"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
@@ -776,12 +777,20 @@
 					</array>
 				</object>
 			</object>
-			<object class="NSMenu" id="1050830867">
+			<object class="NSMenu" id="663892823">
 				<string key="NSTitle"/>
 				<array class="NSMutableArray" key="NSMenuItems">
-					<object class="NSMenuItem" id="294431307">
-						<reference key="NSMenu" ref="1050830867"/>
+					<object class="NSMenuItem" id="414170065">
+						<reference key="NSMenu" ref="663892823"/>
 						<string key="NSTitle">Select movie...</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="35465992"/>
+						<reference key="NSMixedImage" ref="502551668"/>
+					</object>
+					<object class="NSMenuItem" id="394780658">
+						<reference key="NSMenu" ref="663892823"/>
+						<string key="NSTitle">Quit</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
 						<reference key="NSOnImage" ref="35465992"/>
@@ -1164,7 +1173,7 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">movieView</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="647588870"/>
+						<reference key="destination" ref="916811531"/>
 					</object>
 					<int key="connectionID">561</int>
 				</object>
@@ -1172,7 +1181,7 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">selectMovieFile:</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="294431307"/>
+						<reference key="destination" ref="414170065"/>
 					</object>
 					<int key="connectionID">584</int>
 				</object>
@@ -1180,7 +1189,7 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">statusMenu</string>
 						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="1050830867"/>
+						<reference key="destination" ref="663892823"/>
 					</object>
 					<int key="connectionID">586</int>
 				</object>
@@ -1321,7 +1330,7 @@
 						<int key="objectID">372</int>
 						<reference key="object" ref="439893737"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="647588870"/>
+							<reference ref="916811531"/>
 						</array>
 						<reference key="parent" ref="972006081"/>
 					</object>
@@ -1748,22 +1757,28 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">540</int>
-						<reference key="object" ref="647588870"/>
+						<reference key="object" ref="916811531"/>
 						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="439893737"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">571</int>
-						<reference key="object" ref="1050830867"/>
+						<reference key="object" ref="663892823"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="294431307"/>
+							<reference ref="414170065"/>
+							<reference ref="394780658"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">581</int>
-						<reference key="object" ref="294431307"/>
-						<reference key="parent" ref="1050830867"/>
+						<reference key="object" ref="414170065"/>
+						<reference key="parent" ref="663892823"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">587</int>
+						<reference key="object" ref="394780658"/>
+						<reference key="parent" ref="663892823"/>
 					</object>
 				</array>
 			</object>
@@ -1848,6 +1863,7 @@
 				<string key="571.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="58.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="581.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="587.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="72.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="73.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="74.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1863,7 +1879,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">586</int>
+			<int key="maxID">587</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
