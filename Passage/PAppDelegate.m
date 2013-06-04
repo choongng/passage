@@ -29,12 +29,15 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    // Hide dock icon
     [self hideDockIcon];
     
+    // Place movie window over desktop
     [self.window setLevel:kCGDesktopWindowLevel];
     [self.window setStyleMask:0];
     self.window.canHide = NO;
     
+    // Load the movie
     NSRect frame = self.window.screen.frame;
     [self.window setFrame:frame display:YES];
     self.movieView.frame = frame;
@@ -45,13 +48,12 @@
 
     [self.movieView.movie setCurrentTime:[self getCurrentPlaybackTime]];
     
+    // Schedule periodic callback so we can advance the movie
     self.frameAdvanceTimer = [NSTimer scheduledTimerWithTimeInterval:10
                                      target:self
                                    selector:@selector(advanceFrame)
                                    userInfo:nil
-                                    repeats:YES];
-    
-    self.movieView.movie.delegate = self;
+                                    repeats:YES];    
 }
 
 - (void)hideDockIcon
@@ -65,6 +67,9 @@
     // The implementation inside QT seems to be efficient when seeking to the
     // same frame repeatedly.
     self.movieView.movie.currentTime = [self getCurrentPlaybackTime];
+}
+
+- (IBAction)selectMovieFile:(id)sender {
 }
 
 @end
