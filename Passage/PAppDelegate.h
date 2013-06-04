@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <QTKit/QTKit.h>
 
-@interface PAppDelegate : NSObject <NSApplicationDelegate, NSOpenSavePanelDelegate>
+@interface PAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSOpenSavePanelDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
 @property (weak) IBOutlet QTMovieView *movieView;

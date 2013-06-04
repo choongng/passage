@@ -10,22 +10,7 @@
 
 @implementation PAppDelegate
 
-- (QTTime)getCurrentPlaybackTime
-{
-    // Get progress through the day
-    NSDate *now = [NSDate date];
-    NSDateComponents *dateComponents = [[NSCalendar currentCalendar]
-                                        components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit)
-                                        fromDate:now];
-    NSDate *beginningOfDay = [[NSCalendar currentCalendar] dateFromComponents:dateComponents];
-    NSTimeInterval dayElapsedInterval = [now timeIntervalSinceDate:beginningOfDay];
-    float dayElapsed = dayElapsedInterval / (24 * 60 * 60);
-    
-    // Set progress through the movie
-    QTTime startTime = self.movieView.movie.duration;
-    startTime.timeValue = startTime.timeValue * dayElapsed;
-    return startTime;
-}
+#pragma mark - NSApplicationDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -38,11 +23,8 @@
     self.window.canHide = NO;
     self.window.collectionBehavior = NSWindowCollectionBehaviorCanJoinAllSpaces;
     
-    
-    // Load the movie
-    NSRect frame = self.window.screen.frame;
-    [self.window setFrame:frame display:YES];
-    self.movieView.frame = frame;
+    // Set up movie area
+    [self resizePlaybackArea];
     
     // Schedule periodic callback so we can advance the movie
     self.frameAdvanceTimer = [NSTimer scheduledTimerWithTimeInterval:10
@@ -60,12 +42,25 @@
     [self.statusItem setMenu:self.statusMenu];
 }
 
-- (void)loadMovie:(NSURL *)movieURL
+- (void)applicationDidChangeScreenParameters:(NSNotification *)notification
 {
-    self.movieView.movie = [QTMovie movieWithURL:movieURL error:NULL];
-    self.movieView.preservesAspectRatio = YES;
-    self.movieView.movie.muted = YES;
-    [self.movieView.movie setCurrentTime:[self getCurrentPlaybackTime]];
+    [self resizePlaybackArea];
+}
+
+#pragma mark - NSWindowDelegate
+
+- (void)windowDidResize:(NSNotification *)notification
+{
+    [self resizePlaybackArea];
+}
+
+#pragma mark - window management
+
+- (void)resizePlaybackArea
+{
+    NSRect frame = self.window.screen.frame;
+    [self.window setFrame:frame display:YES];
+    self.movieView.frame = frame;
 }
 
 - (void)hideDockIcon
@@ -74,11 +69,15 @@
     TransformProcessType(&psn, kProcessTransformToBackgroundApplication);
 }
 
-- (void)advanceFrame
+
+#pragma mark - movie management
+
+- (void)loadMovie:(NSURL *)movieURL
 {
-    // The implementation inside QT seems to be efficient when seeking to the
-    // same frame repeatedly.
-    self.movieView.movie.currentTime = [self getCurrentPlaybackTime];
+    self.movieView.movie = [QTMovie movieWithURL:movieURL error:NULL];
+    self.movieView.preservesAspectRatio = YES;
+    self.movieView.movie.muted = YES;
+    [self.movieView.movie setCurrentTime:[self getCurrentPlaybackTime]];
 }
 
 - (IBAction)selectMovieFile:(id)sender {
@@ -92,7 +91,32 @@
     }];
     [openPanel setLevel:kCGPopUpMenuWindowLevel];
     [openPanel makeKeyAndOrderFront:self];
-    [NSApp activateIgnoringOtherApps:YES];    
+    [NSApp activateIgnoringOtherApps:YES];
 }
+
+- (QTTime)getCurrentPlaybackTime
+{
+    // Get progress through the day
+    NSDate *now = [NSDate date];
+    NSDateComponents *dateComponents = [[NSCalendar currentCalendar]
+                                        components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit)
+                                        fromDate:now];
+    NSDate *beginningOfDay = [[NSCalendar currentCalendar] dateFromComponents:dateComponents];
+    NSTimeInterval dayElapsedInterval = [now timeIntervalSinceDate:beginningOfDay];
+    float dayElapsed = dayElapsedInterval / (24 * 60 * 60);
+    
+    // Set progress through the movie
+    QTTime startTime = self.movieView.movie.duration;
+    startTime.timeValue = startTime.timeValue * dayElapsed;
+    return startTime;
+}
+
+- (void)advanceFrame
+{
+    // The implementation inside QT seems to be efficient when seeking to the
+    // same frame repeatedly.
+    self.movieView.movie.currentTime = [self getCurrentPlaybackTime];
+}
+
 
 @end
