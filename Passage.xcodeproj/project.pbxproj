@@ -18,6 +18,7 @@
 		013C9485175C694100522999 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 013C9483175C694100522999 /* InfoPlist.strings */; };
 		013C9488175C694100522999 /* PassageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 013C9487175C694100522999 /* PassageTests.m */; };
 		01E489F2175D91EC0084216A /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E489F1175D91EC0084216A /* QTKit.framework */; };
+		01E489F4175DCA380084216A /* Notes.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 01E489F3175DCA380084216A /* Notes.rtf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		013C9487175C694100522999 /* PassageTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PassageTests.m; sourceTree = "<group>"; };
 		01E489EF175D91E50084216A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		01E489F1175D91EC0084216A /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
+		01E489F3175DCA380084216A /* Notes.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Notes.rtf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 		013C9451175C694000522999 = {
 			isa = PBXGroup;
 			children = (
+				01E489F3175DCA380084216A /* Notes.rtf */,
 				013C9463175C694000522999 /* Passage */,
 				013C9480175C694100522999 /* PassageTests */,
 				013C945C175C694000522999 /* Frameworks */,
@@ -234,6 +237,7 @@
 				013C9468175C694000522999 /* InfoPlist.strings in Resources */,
 				013C946E175C694000522999 /* Credits.rtf in Resources */,
 				013C9474175C694000522999 /* MainMenu.xib in Resources */,
+				01E489F4175DCA380084216A /* Notes.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
