@@ -10,6 +10,12 @@
 
 @implementation PAppDelegate
 
+- (id)init
+{
+    self = [super init];
+    return self;
+}
+
 #pragma mark - NSApplicationDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -58,9 +64,47 @@
 
 - (void)resizePlaybackArea
 {
+    // set window to screen size
     NSRect frame = self.window.screen.frame;
     [self.window setFrame:frame display:YES];
-    self.movieView.frame = frame;
+
+    if (self.movieView.movie != nil) {
+        // get underlying movie size
+        NSSize movieSize;
+        [[self.movieView.movie attributeForKey:QTMovieNaturalSizeAttribute] getValue:&movieSize];
+        
+        // get screen size
+        NSRect screenFrame = self.window.screen.frame;
+        
+        // find smallest dimension of movie wrt screen
+        float heightRatio = 1.0f * movieSize.height / screenFrame.size.height;
+        float widthRatio = 1.0f * movieSize.width / screenFrame.size.width;
+        
+        // calculate scaled movie size
+        int scaledWidth, scaledHeight, scaledOffsetX, scaledOffsetY;
+        if (heightRatio > widthRatio) {
+            scaledWidth = screenFrame.size.width;
+            scaledHeight = 1.0f * scaledWidth / movieSize.width * movieSize.height;
+        } else {
+            scaledHeight = screenFrame.size.height;
+            scaledWidth = 1.0f * scaledHeight / movieSize.height * movieSize.width;
+        }
+        
+        scaledOffsetX = (scaledWidth - screenFrame.size.width) / 2;
+        scaledOffsetY = (scaledHeight - screenFrame.size.height) / 2;
+        
+        // place view within window to crop horiz or vert
+        NSRect movieFrame = {
+            -scaledOffsetX,
+            -scaledOffsetY,
+            scaledWidth,
+            scaledHeight
+        };
+        NSLog(@"%f, %f, %f, %f", movieFrame.origin.x, movieFrame.origin.y, movieFrame.size.width, movieFrame.size.height);
+        self.movieView.frame = movieFrame;
+    } else {
+        self.movieView.frame = frame;
+    }
 }
 
 - (void)hideDockIcon
@@ -68,7 +112,6 @@
     ProcessSerialNumber psn = { 0, kCurrentProcess };
     TransformProcessType(&psn, kProcessTransformToBackgroundApplication);
 }
-
 
 #pragma mark - movie management
 
@@ -78,6 +121,7 @@
     self.movieView.preservesAspectRatio = YES;
     self.movieView.movie.muted = YES;
     [self.movieView.movie setCurrentTime:[self getCurrentPlaybackTime]];
+    [self resizePlaybackArea];
 }
 
 - (IBAction)selectMovieFile:(id)sender {
