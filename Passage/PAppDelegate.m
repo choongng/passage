@@ -37,13 +37,16 @@
                                      target:self
                                    selector:@selector(advanceFrame)
                                    userInfo:nil
-                                    repeats:YES];
+                              
+                                                             repeats:YES];
     
     // Add status item
     NSBundle *bundle = [NSBundle mainBundle];
-    NSImage *statusImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForImageResource:@"smiley"]];
+    NSImage *statusImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForImageResource:@"status-icon"]];
+    NSImage *statusImageHighlight = [[NSImage alloc] initWithContentsOfFile:[bundle pathForImageResource:@"status-icon-highlight"]];
     self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
     self.statusItem.image = statusImage;
+    self.statusItem.alternateImage = statusImageHighlight;
     self.statusItem.highlightMode = YES;
     [self.statusItem setMenu:self.statusMenu];
 }
