@@ -24,31 +24,36 @@
     [self hideDockIcon];
     
     // Place movie window over desktop, under icons, and in all spaces
-    [self.window setLevel:kCGDesktopWindowLevel];
-    [self.window setStyleMask:0];
-    self.window.canHide = NO;
-    self.window.collectionBehavior = NSWindowCollectionBehaviorCanJoinAllSpaces;
-    
+    {
+        NSWindow *w = self.window;
+        w.level = kCGDesktopWindowLevel;
+        w.styleMask = 0;
+        w.canHide = NO;
+        w.collectionBehavior = NSWindowCollectionBehaviorCanJoinAllSpaces;
+    }
+
     // Set up movie area
     [self resizePlaybackArea];
     
     // Schedule periodic callback so we can advance the movie
-    self.frameAdvanceTimer = [NSTimer scheduledTimerWithTimeInterval:10
-                                     target:self
-                                   selector:@selector(advanceFrame)
-                                   userInfo:nil
-                              
-                                                             repeats:YES];
+    self.frameAdvanceTimer = [NSTimer
+                              scheduledTimerWithTimeInterval:10
+                              target:self
+                              selector:@selector(advanceFrame)
+                              userInfo:nil
+                              repeats:YES];
     
     // Add status item
-    NSBundle *bundle = [NSBundle mainBundle];
-    NSImage *statusImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForImageResource:@"status-icon"]];
-    NSImage *statusImageHighlight = [[NSImage alloc] initWithContentsOfFile:[bundle pathForImageResource:@"status-icon-highlight"]];
-    self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
-    self.statusItem.image = statusImage;
-    self.statusItem.alternateImage = statusImageHighlight;
-    self.statusItem.highlightMode = YES;
-    [self.statusItem setMenu:self.statusMenu];
+    {
+        NSImage *statusImage = [PAppDelegate imageForResourceName:@"status-icon"];
+        NSImage *statusImageHighlight = [PAppDelegate imageForResourceName:@"status-icon-highlight"];
+        NSStatusItem *si = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
+        si.image = statusImage;
+        si.alternateImage = statusImageHighlight;
+        si.highlightMode = YES;
+        si.menu = self.statusMenu;
+        self.statusItem = si;
+    }
 }
 
 - (void)applicationDidChangeScreenParameters:(NSNotification *)notification
@@ -165,5 +170,12 @@
     self.movieView.movie.currentTime = [self getCurrentPlaybackTime];
 }
 
+#pragma mark - helpers
+
++ (NSImage *)imageForResourceName:(NSString *)resourceName
+{
+    NSBundle *bundle = [NSBundle mainBundle];
+    return [[NSImage alloc] initWithContentsOfFile:[bundle pathForImageResource:resourceName]];
+}
 
 @end
