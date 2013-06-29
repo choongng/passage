@@ -123,15 +123,24 @@
 
 - (IBAction)showAboutDialog:(id)sender
 {
-    ProcessSerialNumber psn = { 0, kCurrentProcess };
-    TransformProcessType(&psn, kProcessTransformToForegroundApplication);
-    [NSApp activateIgnoringOtherApps:YES];
     //show about window
     NSArray *aboutWindowObjects = NULL;
     [[NSBundle mainBundle] loadNibNamed:@"AboutWindow"
                                   owner:self
                         topLevelObjects:&aboutWindowObjects];
     self.aboutWindowObjects = aboutWindowObjects;
+
+    ProcessSerialNumber psn = { 0, kCurrentProcess };
+    TransformProcessType(&psn, kProcessTransformToForegroundApplication);
+
+    for (int i=0; i<self.aboutWindowObjects.count; i++) {
+        NSWindow *wind = (NSWindow *)(self.aboutWindowObjects[i]);
+        if ([wind.title isEqualToString:@"About Passage"])
+        [wind setLevel:kCGPopUpMenuWindowLevel];
+        [wind makeKeyAndOrderFront:self];
+    }
+
+    [NSApp activateIgnoringOtherApps:YES];
 }
 
 #pragma mark - movie management
