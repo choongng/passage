@@ -121,14 +121,16 @@
     TransformProcessType(&psn, kProcessTransformToBackgroundApplication);
 }
 
-- (IBAction)showAboutDialog:(id)sender {
-    // TODO: we need to override the standard about dialog's behavior so we can put the app into the background when we're done
+- (IBAction)showAboutDialog:(id)sender
+{
     ProcessSerialNumber psn = { 0, kCurrentProcess };
     TransformProcessType(&psn, kProcessTransformToForegroundApplication);
     [NSApp activateIgnoringOtherApps:YES];
     //show about window
-    NSArray *aboutWindowObjects;
-    [[NSBundle mainBundle] loadNibNamed:@"AboutWindow" owner:self topLevelObjects:&aboutWindowObjects];
+    NSArray *aboutWindowObjects = NULL;
+    [[NSBundle mainBundle] loadNibNamed:@"AboutWindow"
+                                  owner:self
+                        topLevelObjects:&aboutWindowObjects];
     self.aboutWindowObjects = aboutWindowObjects;
 }
 

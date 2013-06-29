@@ -17,6 +17,7 @@
 @property NSTimer *frameAdvanceTimer;
 @property NSStatusItem *statusItem;
 @property NSArray *aboutWindowObjects;
+@property NSWindow *aboutWindow;
 
 - (void)advanceFrame;
 - (IBAction)showAboutDialog:(id)sender;
