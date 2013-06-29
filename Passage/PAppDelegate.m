@@ -22,7 +22,7 @@
 {
     // Hide dock icon
     [self hideDockIcon];
-    
+        
     // Place movie window over desktop, under icons, and in all spaces
     {
         NSWindow *w = self.window;
@@ -121,6 +121,17 @@
     TransformProcessType(&psn, kProcessTransformToBackgroundApplication);
 }
 
+- (IBAction)showAboutDialog:(id)sender {
+    // TODO: we need to override the standard about dialog's behavior so we can put the app into the background when we're done
+    ProcessSerialNumber psn = { 0, kCurrentProcess };
+    TransformProcessType(&psn, kProcessTransformToForegroundApplication);
+    [NSApp activateIgnoringOtherApps:YES];
+    //show about window
+    NSArray *aboutWindowObjects;
+    [[NSBundle mainBundle] loadNibNamed:@"AboutWindow" owner:self topLevelObjects:&aboutWindowObjects];
+    self.aboutWindowObjects = aboutWindowObjects;
+}
+
 #pragma mark - movie management
 
 - (void)loadMovie:(NSURL *)movieURL
@@ -133,6 +144,9 @@
 }
 
 - (IBAction)selectMovieFile:(id)sender {
+    ProcessSerialNumber psn = { 0, kCurrentProcess };
+    TransformProcessType(&psn, kProcessTransformToForegroundApplication);
+
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
     openPanel.delegate = self;
     [openPanel beginWithCompletionHandler:^(NSInteger result) {
@@ -140,6 +154,7 @@
             NSLog(@"%@", openPanel.URL);
             [self loadMovie:openPanel.URL];
         }
+        TransformProcessType(&psn, kProcessTransformToBackgroundApplication);
     }];
     [openPanel setLevel:kCGPopUpMenuWindowLevel];
     [openPanel makeKeyAndOrderFront:self];

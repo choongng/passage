@@ -16,8 +16,10 @@
 @property (weak) IBOutlet NSMenu *statusMenu;
 @property NSTimer *frameAdvanceTimer;
 @property NSStatusItem *statusItem;
+@property NSArray *aboutWindowObjects;
 
 - (void)advanceFrame;
+- (IBAction)showAboutDialog:(id)sender;
 - (IBAction)selectMovieFile:(id)sender;
 
 @end

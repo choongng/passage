@@ -19,6 +19,8 @@
 		013C9488175C694100522999 /* PassageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 013C9487175C694100522999 /* PassageTests.m */; };
 		0190CF091763BF3B002332B4 /* status-icon-highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 0190CF071763BF3B002332B4 /* status-icon-highlight.png */; };
 		0190CF0A1763BF3B002332B4 /* status-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0190CF081763BF3B002332B4 /* status-icon.png */; };
+		0190CF0E17645C89002332B4 /* AboutWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0190CF0D17645C89002332B4 /* AboutWindow.xib */; };
+		01AD5B85177E7B3E00E3398E /* PAboutWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 01AD5B84177E7B3E00E3398E /* PAboutWindow.m */; };
 		01E489F2175D91EC0084216A /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E489F1175D91EC0084216A /* QTKit.framework */; };
 		01E489F4175DCA380084216A /* Notes.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 01E489F3175DCA380084216A /* Notes.rtf */; };
 /* End PBXBuildFile section */
@@ -55,6 +57,9 @@
 		013C9487175C694100522999 /* PassageTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PassageTests.m; sourceTree = "<group>"; };
 		0190CF071763BF3B002332B4 /* status-icon-highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status-icon-highlight.png"; sourceTree = "<group>"; };
 		0190CF081763BF3B002332B4 /* status-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status-icon.png"; sourceTree = "<group>"; };
+		0190CF0D17645C89002332B4 /* AboutWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutWindow.xib; sourceTree = "<group>"; };
+		01AD5B83177E7B3E00E3398E /* PAboutWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAboutWindow.h; sourceTree = "<group>"; };
+		01AD5B84177E7B3E00E3398E /* PAboutWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAboutWindow.m; sourceTree = "<group>"; };
 		01E489EF175D91E50084216A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		01E489F1175D91EC0084216A /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		01E489F3175DCA380084216A /* Notes.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Notes.rtf; sourceTree = "<group>"; };
@@ -129,7 +134,10 @@
 			children = (
 				013C946F175C694000522999 /* PAppDelegate.h */,
 				013C9470175C694000522999 /* PAppDelegate.m */,
+				01AD5B83177E7B3E00E3398E /* PAboutWindow.h */,
+				01AD5B84177E7B3E00E3398E /* PAboutWindow.m */,
 				013C9472175C694000522999 /* MainMenu.xib */,
+				0190CF0D17645C89002332B4 /* AboutWindow.xib */,
 				013C9464175C694000522999 /* Supporting Files */,
 			);
 			path = Passage;
@@ -246,6 +254,7 @@
 				01E489F4175DCA380084216A /* Notes.rtf in Resources */,
 				0190CF091763BF3B002332B4 /* status-icon-highlight.png in Resources */,
 				0190CF0A1763BF3B002332B4 /* status-icon.png in Resources */,
+				0190CF0E17645C89002332B4 /* AboutWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +291,7 @@
 			files = (
 				013C946A175C694000522999 /* main.m in Sources */,
 				013C9471175C694000522999 /* PAppDelegate.m in Sources */,
+				01AD5B85177E7B3E00E3398E /* PAboutWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
