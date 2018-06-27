@@ -7,6 +7,8 @@
 //
 
 #import "PAppDelegate.h"
+#import <AVFoundation/AVFoundation.h>
+#import <AVKit/AVKit.h>
 
 @implementation PAppDelegate
 
@@ -21,8 +23,9 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Hide dock icon
+
     [self hideDockIcon];
-        
+    
     // Place movie window over desktop, under icons, and in all spaces
     {
         NSWindow *w = self.window;
@@ -75,11 +78,20 @@
     // set window to screen size
     NSRect frame = self.window.screen.frame;
     [self.window setFrame:frame display:YES];
-
-    if (self.movieView.movie != nil) {
+    
+    if (self.moviePlayer.rate != 0 && self.moviePlayer.error == nil) {
+        // set playerLayer frame to match movieView
+        [self.playerLayer setFrame:self.movieView.bounds];
+        [self.movieView.layer addSublayer:self.playerLayer];
+        
         // get underlying movie size
+        AVAssetTrack *track = [[self.moviePlayer.currentItem.asset tracksWithMediaType:AVMediaTypeVideo] firstObject];
         NSSize movieSize;
-        [[self.movieView.movie attributeForKey:QTMovieNaturalSizeAttribute] getValue:&movieSize];
+        if (track != nil)
+        {
+            movieSize = [track naturalSize];
+            movieSize = CGSizeApplyAffineTransform(movieSize, track.preferredTransform);
+        }
         
         // get screen size
         NSRect screenFrame = self.window.screen.frame;
@@ -113,6 +125,16 @@
     } else {
         self.movieView.frame = frame;
     }
+    
+    // required to have view accept a new layer
+    [self.movieView setWantsLayer:YES];
+    // create a layer, add it to movieView
+    AVPlayerLayer *newPlayerLayer = [AVPlayerLayer playerLayerWithPlayer:self.moviePlayer];
+    newPlayerLayer.frame = self.movieView.layer.bounds;
+    newPlayerLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+    [self.movieView.layer addSublayer:newPlayerLayer];
+    self.playerLayer = newPlayerLayer;
+    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.moviePlayer];
 }
 
 - (void)hideDockIcon
@@ -129,17 +151,17 @@
                                   owner:self
                         topLevelObjects:&aboutWindowObjects];
     self.aboutWindowObjects = aboutWindowObjects;
-
+    
     ProcessSerialNumber psn = { 0, kCurrentProcess };
     TransformProcessType(&psn, kProcessTransformToForegroundApplication);
-
+    
     for (int i=0; i<self.aboutWindowObjects.count; i++) {
         NSWindow *wind = (NSWindow *)(self.aboutWindowObjects[i]);
         if ([wind.title isEqualToString:@"About Passage"])
-        [wind setLevel:kCGPopUpMenuWindowLevel];
+            [wind setLevel:kCGPopUpMenuWindowLevel];
         [wind makeKeyAndOrderFront:self];
     }
-
+    
     [NSApp activateIgnoringOtherApps:YES];
 }
 
@@ -147,17 +169,30 @@
 
 - (void)loadMovie:(NSURL *)movieURL
 {
-    self.movieView.movie = [QTMovie movieWithURL:movieURL error:NULL];
-    self.movieView.preservesAspectRatio = YES;
-    self.movieView.movie.muted = YES;
-    [self.movieView.movie setCurrentTime:[self getCurrentPlaybackTime]];
+    
+    if (self.moviePlayer.rate>0 && !self.moviePlayer.error)
+    {
+        // already have a player
+        [self.moviePlayer setRate:0.0];
+        AVPlayerItem *moviePlayerItem = [AVPlayerItem playerItemWithURL:movieURL];
+        [self.moviePlayer replaceCurrentItemWithPlayerItem:moviePlayerItem];
+        // dereference old playerLayer or else memory leak?
+        //self.playerLayer = nil;
+    } else {
+        // no player already
+        self.moviePlayer = [AVPlayer playerWithURL:movieURL];
+    }
+    
+    // set video to correct frame
+    [self.moviePlayer seekToTime:[self getCurrentPlaybackTime]];
+    
     [self resizePlaybackArea];
 }
 
 - (IBAction)selectMovieFile:(id)sender {
     ProcessSerialNumber psn = { 0, kCurrentProcess };
     TransformProcessType(&psn, kProcessTransformToForegroundApplication);
-
+    
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
     openPanel.delegate = self;
     [openPanel beginWithCompletionHandler:^(NSInteger result) {
@@ -172,7 +207,8 @@
     [NSApp activateIgnoringOtherApps:YES];
 }
 
-- (QTTime)getCurrentPlaybackTime
+
+- (CMTime)getCurrentPlaybackTime
 {
     // Get progress through the day
     NSDate *now = [NSDate date];
@@ -184,8 +220,12 @@
     float dayElapsed = dayElapsedInterval / (24 * 60 * 60);
     
     // Set progress through the movie
-    QTTime startTime = self.movieView.movie.duration;
-    startTime.timeValue = startTime.timeValue * dayElapsed;
+    CMTime startTime = self.moviePlayer.currentItem.asset.duration;
+    NSLog(@"Duration:%lld", startTime.value);
+    NSLog(@"dayElapsed:%f", dayElapsed);
+    startTime = CMTimeMultiplyByFloat64(startTime, dayElapsed);
+    NSLog(@"%lld - StartTIME", startTime.value);
+    
     return startTime;
 }
 
@@ -193,7 +233,8 @@
 {
     // The implementation inside QT seems to be efficient when seeking to the
     // same frame repeatedly.
-    self.movieView.movie.currentTime = [self getCurrentPlaybackTime];
+    //TODO: Check that it's okay for AVPlayer as well....
+    [self.moviePlayer seekToTime:[self getCurrentPlaybackTime]];
 }
 
 #pragma mark - helpers
