@@ -21,8 +21,10 @@
 		0190CF0A1763BF3B002332B4 /* status-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0190CF081763BF3B002332B4 /* status-icon.png */; };
 		0190CF0E17645C89002332B4 /* AboutWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0190CF0D17645C89002332B4 /* AboutWindow.xib */; };
 		01AD5B85177E7B3E00E3398E /* PAboutWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 01AD5B84177E7B3E00E3398E /* PAboutWindow.m */; };
-		01E489F2175D91EC0084216A /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E489F1175D91EC0084216A /* QTKit.framework */; };
 		01E489F4175DCA380084216A /* Notes.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 01E489F3175DCA380084216A /* Notes.rtf */; };
+		10C0F7E720C8EF5C00589A1F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01E489EF175D91E50084216A /* AVFoundation.framework */; };
+		10C0F7E920CA389600589A1F /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10C0F7E820CA389600589A1F /* AVKit.framework */; };
+		10DBF53820E5EBE6008C9ED8 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DBF53720E5EBE6008C9ED8 /* CoreMedia.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,8 +63,9 @@
 		01AD5B83177E7B3E00E3398E /* PAboutWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAboutWindow.h; sourceTree = "<group>"; };
 		01AD5B84177E7B3E00E3398E /* PAboutWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAboutWindow.m; sourceTree = "<group>"; };
 		01E489EF175D91E50084216A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		01E489F1175D91EC0084216A /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		01E489F3175DCA380084216A /* Notes.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Notes.rtf; sourceTree = "<group>"; };
+		10C0F7E820CA389600589A1F /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		10DBF53720E5EBE6008C9ED8 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,7 +73,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				01E489F2175D91EC0084216A /* QTKit.framework in Frameworks */,
+				10DBF53820E5EBE6008C9ED8 /* CoreMedia.framework in Frameworks */,
+				10C0F7E920CA389600589A1F /* AVKit.framework in Frameworks */,
+				10C0F7E720C8EF5C00589A1F /* AVFoundation.framework in Frameworks */,
 				013C945E175C694000522999 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -110,10 +115,11 @@
 		013C945C175C694000522999 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				10DBF53720E5EBE6008C9ED8 /* CoreMedia.framework */,
+				10C0F7E820CA389600589A1F /* AVKit.framework */,
+				01E489EF175D91E50084216A /* AVFoundation.framework */,
 				013C945D175C694000522999 /* Cocoa.framework */,
 				013C947B175C694100522999 /* SenTestingKit.framework */,
-				01E489F1175D91EC0084216A /* QTKit.framework */,
-				01E489EF175D91E50084216A /* AVFoundation.framework */,
 				013C945F175C694000522999 /* Other Frameworks */,
 			);
 			name = Frameworks;
